@@ -11,15 +11,11 @@ directories = {
 }
 
 
-def input_doc():
-    return input('Input document number: ')
-
-
 def find_owner():
-    number = input_doc()
-    owner = get_document_owner(number)
-    if owner is not None:
-        print(f"Document owner: {owner}")
+    doc_number = input('Input document number: ')
+    doc_owner = get_document_owner(doc_number)
+    if doc_owner is not None:
+        print(f"Document owner: {doc_owner}")
     else:
         print(f'This document was not found into the database')
 
@@ -32,7 +28,7 @@ def get_document_owner(doc_number):
 
 
 def find_storage_shelf():
-    doc_number = input_doc()
+    doc_number = input('Input document number: ')
     number_of_shelf = get_number_of_shelf(doc_number)
     if number_of_shelf is not None:
         print(f'The document keeps on the shelf №{number_of_shelf}')
@@ -75,8 +71,37 @@ def delete_shelf():
         if shelf_number == i:
             del directories[shelf_number]
             print(f'Shelf №{shelf_number} deleted successfully. {get_all_shelves_str()}')
-            break
+            return
     print(f'This shelf was not found. {get_all_shelves_str()}')
+
+
+def add_document():
+    doc_number = input('Input document number: ')
+    doc_type = input('Input document type: ')
+    doc_owner = input('Input document owner: ')
+    doc_shelf = input('Input shelf for storage document: ')
+
+    if doc_shelf in directories and get_document_owner(doc_number) is None:
+        documents.append({'type': doc_type, 'number': doc_number, 'name': doc_owner})
+        directories.get(doc_shelf).append(doc_number)
+        list_of_documents()
+    else:
+        print(f"This shelf wasn't found. You need to add shelf using command 'as'")
+
+
+def delete_document():
+    doc_number = input('Input document number: ')
+
+    if get_document_owner(doc_number) is not None:
+        for i in range(len(documents)):
+            if documents[i]['number'] == doc_number:
+                del documents[i]
+                break
+        directories.get(get_number_of_shelf(doc_number)).remove(doc_number)
+        list_of_documents()
+    else:
+        print(f"Document wasn't found")
+        list_of_documents()
 
 
 def start():
@@ -92,6 +117,10 @@ def start():
             add_shelf()
         elif command == 'ds':
             delete_shelf()
+        elif command == 'ad':
+            add_document()
+        elif command == 'd':
+            delete_document()
         elif command == 'exit':
             break
         else:
