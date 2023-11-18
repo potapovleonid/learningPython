@@ -44,6 +44,7 @@ def get_number_of_shelf(doc_number):
 
 
 def list_of_documents():
+    print(f'Current list of documents:')
     for i in documents:
         print(
             f"№: {i.get('number')}, type: {i.get('type')} owner: {i.get('name')}, "
@@ -103,6 +104,29 @@ def delete_document():
         print(f"Document wasn't found")
         list_of_documents()
 
+def move_document():
+    doc_number = input('Input document number: ')
+    new_doc_shelf = input('Input new shelf for storage document: ')
+
+    if directories.get(new_doc_shelf) is None:
+        print(f'This shelf was not found. {get_all_shelves_str()}')
+        return
+
+    if get_document_owner(doc_number) is None:
+        print(f'This document was not found.')
+        list_of_documents()
+        return
+
+    doc_shelf = get_number_of_shelf(doc_number)
+
+    if doc_shelf == new_doc_shelf:
+        print(f'Old document shelf and new document shelf are identical\n'
+              f'{get_all_shelves_str()}')
+        return
+
+
+    if doc_shelf is not None:
+        directories.get(doc_shelf)
 
 def start():
     while True:
@@ -121,6 +145,8 @@ def start():
             add_document()
         elif command == 'd':
             delete_document()
+        elif command == 'm':
+            move_document()
         elif command == 'exit':
             break
         else:
