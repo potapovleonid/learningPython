@@ -1,18 +1,13 @@
 def calc_sum(path_to_file):
     file_sum = 0
-    file = None
-    try:
-        file = open(path_to_file)
+    with open(path_to_file, 'r') as file:
         for i in file:
-            i = i.strip().split(" ")
-            if len(i) >= 3: file_sum += i[2]
-    except FileNotFoundError as e:
-        print("Error open file")
-    except Exception as e:
-        print(e)
-    finally:
-        if file is not None:
-            file.close()
+            price = i.strip().split('\t')[2]
+            try:
+                file_sum += float(price.replace(',', '.'))
+            except:
+                pass
+    return file_sum
 
 
-calc_sum('../rwdata/data_2/real_data.txt')
+print(calc_sum('../rwdata/data_2/real_data.txt'))
