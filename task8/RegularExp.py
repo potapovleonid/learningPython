@@ -17,11 +17,16 @@ repost_pattern = r'Репостов:\s\d+'
 
 for i in messages:
     if re.findall(likes_pattern, i):
-        like = int(re.findall(r'\d+' ,re.findall(likes_pattern, i)[0])[0])
+        like = int(re.findall(r'\d+', re.findall(likes_pattern, i)[0])[0])
         likes += like
 
     if re.findall(repost_pattern, i):
-        repost = int(re.findall(r'\d+' ,re.findall(repost_pattern, i)[0])[0])
+        repost = int(re.findall(r'\d+', re.findall(repost_pattern, i)[0])[0])
         reposts += repost
 
 print(f'Likes: {likes}, Reposts: {reposts}')
+
+tweet_23 = 'Какое замечательное место! Обязательно вернусть сюда снова. Всем советую!!!'
+print(re.split(r'[!?.]+\s', tweet_23))
+
+#1:35
