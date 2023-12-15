@@ -23,7 +23,7 @@ def check_valid_auto_numbers():
     print(check_valid_auto_number('Ф555ЫЫ'))
 
 
-pattern_email = r'^[\w-]{4,}@([\w-]+\.)[\w]+$'
+pattern_email = r'^[\w-]{4,}@([\w-]{2,}\.)[a-zA-Z]{2,4}$'
 
 
 def check_valid_email(email: str):
