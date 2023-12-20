@@ -39,5 +39,36 @@ def check_valid_emails():
     print(check_valid_email('potap%o!v-lv@mail.ru'))
 
 
+pattern_remove = r'\b(\w+)( \1\b)+'
+
+
+def remove_duplicate(line: str):
+    return re.sub(pattern_remove, r'\1', line)
+
+
+def check_remove_duplicates():
+    print(remove_duplicate('I need need to learn regex regex from scratch.'))
+    print(remove_duplicate('I need need need to learn regex from scratch.'))
+    print(remove_duplicate('I need need to learn regex regex regex regex regex from scratch.'))
+    print(remove_duplicate('I need need to to to learn regex regex from scratch.'))
+    print(remove_duplicate('I need need to learn regex regex from scratch scratch.'))
+
+
+pattern_mobile_number = r'^(\+7)(\d{3})(\d{3})(\d{2})(\d{2})$'
+pattern_mobile_number_actual = r'\1(\2)-\3-\4-\5'
+
+
+def check_valid_mobile_number(number: str):
+    return re.sub(pattern_mobile_number, pattern_mobile_number_actual, number)
+
+
+def check_valid_mobile_numbers():
+    print(check_valid_mobile_number(r'+79876543211'))
+    print(check_valid_mobile_number(r'+7986543211'))
+    print(check_valid_mobile_number(r'+798654321113'))
+
+
 check_valid_auto_numbers()
 check_valid_emails()
+check_remove_duplicates()
+check_valid_mobile_numbers()
